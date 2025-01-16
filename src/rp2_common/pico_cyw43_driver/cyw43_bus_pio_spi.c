@@ -488,6 +488,7 @@ int cyw43_write_reg_u8(cyw43_int_t *self, uint32_t fn, uint32_t reg, uint32_t va
 #endif
 
 int cyw43_read_bytes(cyw43_int_t *self, uint32_t fn, uint32_t addr, size_t len, uint8_t *buf) {
+    CYW43_VDEBUG("cyw43_read_bytes %lu 0x%lx %u\n", fn, addr, len);
     assert(fn != BACKPLANE_FUNCTION || (len <= CYW43_BUS_MAX_BLOCK_SIZE));
     const uint32_t padding = (fn == BACKPLANE_FUNCTION) ? CYW43_BACKPLANE_READ_PAD_LEN_BYTES : 0; // Add response delay
     size_t aligned_len = (len + 3) & ~3;
@@ -515,6 +516,7 @@ int cyw43_read_bytes(cyw43_int_t *self, uint32_t fn, uint32_t addr, size_t len, 
 // Note, uses spid_buf if src isn't using it already
 // Apart from firmware download this appears to only be used for wlan functions?
 int cyw43_write_bytes(cyw43_int_t *self, uint32_t fn, uint32_t addr, size_t len, const uint8_t *src) {
+    CYW43_VDEBUG("cyw43_write_bytes %lu 0x%lx %u\n", fn, addr, len);
     assert(fn != BACKPLANE_FUNCTION || (len <= CYW43_BUS_MAX_BLOCK_SIZE));
     const size_t aligned_len = (len + 3) & ~3u;
     assert(aligned_len > 0 && aligned_len <= 0x7f8);

@@ -104,6 +104,8 @@ static void cyw43_sleep_timeout_reached(async_context_t *context, __unused async
 }
 
 bool cyw43_driver_init(async_context_t *context) {
+    cyw43_state.trace_flags = CYW43_TRACE_ASYNC_EV | CYW43_TRACE_ETH_TX | CYW43_TRACE_ETH_RX | CYW43_TRACE_ETH_FULL | CYW43_TRACE_MAC;
+
     cyw43_init(&cyw43_state);
     cyw43_async_context = context;
     // we need the IRQ to be on the same core as the context, because we need to be able to enable/disable the IRQ
